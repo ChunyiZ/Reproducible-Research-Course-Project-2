@@ -1,0 +1,59 @@
+---
+title: "Data Analysis for Severe Weather"
+output: html_document
+date: "2024-03-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Processing
+
+### Load data
+
+
+```{r load}
+filename <- "StormData.csv.bz2"
+
+if (!file.exists("StormData.csv.bz2")){
+  fileURL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
+  download.file(fileURL, filename, method = "curl") 
+  }
+
+```
+
+### Read the data
+
+```{r readcsv}
+  data <- read.csv("StormData.csv.bz2")
+ 
+```
+
+### Load necessary packages
+
+```{r, message=FALSE}
+
+  library(ggplot2)
+  library(dplyr)
+
+```
+
+### Filter Columns for Process
+
+```{r}
+data1 <- data %>% select(STATE, COUNTYNAME, EVTYPE, FATALITIES, INJURIES, PROPDMG,PROPDMGEXP, CROPDMG, CROPDMGEXP) %>%
+  filter_at(vars(FATALITIES, INJURIES, PROPDMG, CROPDMG), any_vars(.!= 0))
+  #group_by(EVTYPE) 
+    #summarise(FATALITES = sum(FATALITIES), INJURIES = sum(INJURIES))
+
+```
+
+
+## Result
+
+
+
+
+
+
